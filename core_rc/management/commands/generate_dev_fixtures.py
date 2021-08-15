@@ -98,31 +98,3 @@ class Command(BaseCommand):
         f.close()
 
         self.stdout.write(f'Devlopement fixtures is generate in {0}!')
-
-        # self.stdout.write('Watch static...')
-        # self.stdout.write('Watching :')
-
-        # sass_handler = sassHandler()
-        # observer = Observer()
-        # for path_in, path_out in settings.SASS_FILES:
-        #     try:
-        #         compile_sass(
-        #             inpath=path_in,
-        #             outpath=path_out,
-        #             output_style='expanded',
-        #             precision=8,
-        #             source_map=False
-        #         ) 
-        #         self.stdout.write(f'compile sass: {path_in} -> {path_out}')
-        #     except sass.CompileError as exc:
-        #         self.stdout.write(str(exc))
-
-        #     observer.schedule(sass_handler, path_in, recursive=True)
-
-        # observer.start()
-        # try:
-        #     while observer.is_alive():
-        #         observer.join(1)
-        # except KeyboardInterrupt:
-        #     observer.stop()
-        # self.stdout.write('Bye!')
