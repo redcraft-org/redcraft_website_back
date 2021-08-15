@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class InfoProviderPlayer(models.Model):
+class PlayerInfoProvider(models.Model):
     TYPE_PROVIDERS = (
         ('mc', 'Minecraft'),
         ('di', 'Discord'),
@@ -18,4 +18,4 @@ class InfoProviderPlayer(models.Model):
     last_name_provider = models.CharField(max_length=256)
 
     def __str__(self):
-        return f"<InfoProviderPlayer: {self.type_provider} - {self.last_name_provider}>"
+        return f"<PlayerInfoProvider: {self.type_provider} - {self.last_name_provider}>"

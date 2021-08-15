@@ -11,8 +11,11 @@ class Donation(models.Model):
         ('ds', 'discord'),
     )
 
-    provider_uuid = models.CharField(max_length=255)
-    provider_processor = models.CharField(max_length=2, choices=PROVIDER_PROCESSORS, default='mc')
+    player = models.ForeignKey(
+        'Player',
+        related_name='donations',
+        on_delete=models.CASCADE
+    )
     amount = models.IntegerField(help_text='value in cents')
 
     donation_at = models.DateTimeField(auto_now_add=True)
