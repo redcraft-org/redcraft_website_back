@@ -5,5 +5,5 @@ from url_shortener_v1 import views
 
 
 urlpatterns = [
-    path('/<str:shortened>', views.short_url, name='short_url'),
+    path('<str:shortened>', views.short_url, name='short_url'),
 ]
