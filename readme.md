@@ -43,9 +43,9 @@ Use `setup_linux.sh`, or folow these instruction.
 
 ## Start development
 
-Create your fixture with: `python manage.py generate_dev_fixtures {min_article_per_category} {max_article_per_category}`
-Import your fixture with: `python manage.py loaddata dev_fixtures.json `
-Start server with: `python manage.py runserver`
+- Create your fixture with: `python manage.py generate_dev_fixtures {min_article_per_category} {max_article_per_category}`
+- Import your fixture with: `python manage.py loaddata dev_fixtures.json `
+- Start server with: `python manage.py runserver`
 
 ## Contributions
 
