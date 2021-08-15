@@ -12,7 +12,7 @@ class SkinService:
         HEAD = auto()
 
     @staticmethod
-    def __getBody(img_template, slim):
+    def __get_body(img_template, slim):
         img_head = img_template.crop((8, 8, 16, 16))
         img_body = img_template.crop((20, 20, 28, 33))
         img_arm_left = img_template.crop((44, 20, 48 - int(slim), 32))
@@ -31,7 +31,7 @@ class SkinService:
         return img_skin
 
     @staticmethod
-    def __getOuter(img_template, slim):
+    def __get_outer(img_template, slim):
         img_outer_head = img_template.crop((40, 8, 48, 16))
         img_outer_body = img_template.crop((20, 36, 28, 48))
         img_outer_arm_left = img_template.crop((44, 36, 48 - int(slim), 48))
@@ -50,24 +50,24 @@ class SkinService:
         return img_outer
 
     @staticmethod
-    def __toPng(img):
+    def __to_png(img):
         b = io.BytesIO()
         img.save(b, 'PNG')
         return b.getvalue()
 
     @staticmethod
     def __render_template(img_template, is_slim, outer):
-        return SkinService.__toPng(img_template)
+        return SkinService.__to_png(img_template)
 
     @staticmethod
     def __render_body(img_template, is_slim, outer):
-        img_skin = SkinService.__getBody(img_template, is_slim)
+        img_skin = SkinService.__get_body(img_template, is_slim)
 
         if outer:
-            img_outer = SkinService.__getOuter(img_template, is_slim)
+            img_outer = SkinService.__get_outer(img_template, is_slim)
             img_skin.paste(img_outer, (0, 0), img_outer)
 
-        return SkinService.__toPng(img_skin)
+        return SkinService.__to_png(img_skin)
 
     @staticmethod
     def __render_head(img_template, is_slim, outer):
@@ -75,7 +75,7 @@ class SkinService:
         if outer:
             img_outer = img_template.crop((40, 8, 48, 16))
             img_head.paste(img_outer, (0, 0), img_outer)
-        return SkinService.__toPng(img_head)
+        return SkinService.__to_png(img_head)
 
     RENDERER_TYPE = {
         RendererType.BODY: __render_body,
@@ -90,4 +90,4 @@ class SkinService:
 
         img = renderer(img_template, is_slim, outer)
         if size > 16: img = img.resize((size, size * 2), Image.NEAREST)
-        return SkinService.__toPng(img)
+        return SkinService.__to_png(img)
