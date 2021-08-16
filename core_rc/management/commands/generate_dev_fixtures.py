@@ -13,6 +13,7 @@ from core_rc import models
 
 class Command(BaseCommand):
     help = 'Generate dev fixtures.'
+    path = "core_rc/fixtures/dev_fixtures.json"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -91,9 +92,10 @@ class Command(BaseCommand):
                 pk_article += 1
 
         data_json = json.dumps(data)
-        os.remove("core_rc/fixtures/dev_fixtures.json")
+        if (os.path.isfile(self.path)):
+            os.remove(self.path)
 
-        f = open("core_rc/fixtures/dev_fixtures.json", "a")
+        f = open(self.path, "a")
         f.write(data_json)
         f.close()
 
