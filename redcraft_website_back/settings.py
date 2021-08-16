@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
-    'core_rc.apps.CoreRcConfig'
+    'core_rc.apps.CoreRcConfig',
+    'url_shortener_v1.apps.UrlShortenerV1Config'
 ]
 
 MIDDLEWARE = [
