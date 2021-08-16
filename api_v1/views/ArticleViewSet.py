@@ -18,7 +18,7 @@ from api_v1.serializer.ArticleSerializer import ArticleSerializer
 
 class ArticleViewSet(viewsets.ViewSet):
 
-    def __get_artile(self, language, article_id):
+    def __get_article(self, language, article_id):
         language = Language.objects.get(short_code=language.upper())
         article = Article.objects.get(id=article_id)
 
@@ -74,7 +74,7 @@ class ArticleViewSet(viewsets.ViewSet):
         return serializer.data
 
     def retrieve(self, request, language, pk=None):
-        resp = self.__get_artile(
+        resp = self.__get_article(
             language=language,
             article_id=pk
         )
