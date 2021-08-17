@@ -1,6 +1,6 @@
 from django.urls import include, path
-from api_v1.routers.ArticleRouter import ArticleRouter
-from api_v1 import views
+from api_v1_front.routers.ArticleRouter import ArticleRouter
+from api_v1_front import views
 
 
 router = ArticleRouter()

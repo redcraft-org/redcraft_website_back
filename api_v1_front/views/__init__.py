@@ -1,0 +1,1 @@
+from api_v1_front.views.ArticleViewSet import ArticleViewSet

@@ -13,7 +13,7 @@ from core_rc.models import (
     Language,
 )
 
-from api_v1.serializer.ArticleSerializer import ArticleSerializer
+from api_v1_front.serializer.ArticleSerializer import ArticleSerializer
 
 
 class ArticleViewSet(viewsets.ViewSet):

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'core_rc.apps.CoreRcConfig',
-    'api_v1.apps.ApiV1Config',
+    'api_v1_front.apps.ApiV1FrontConfig',
     'url_shortener_v1.apps.UrlShortenerV1Config'
 ]
 
