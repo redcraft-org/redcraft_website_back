@@ -2,7 +2,7 @@ FORMAT: 1A
 
 # API V1 Game
 
-It is a privat api version 0.1, it does require an api key of the type: ```\<provider>_XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX```
+It is a private API version 0.1, it does require an API key of the type: ```\<provider>_XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX```
 
 TODO:
 - add json schema
@@ -22,7 +22,7 @@ TODO:
               "FR",
               "EN"
           ],
-          "username": "Likyaz",
+          "username": "lululombard",
           "providers": {
               "minecraft": {
                   "last_username": "lululombard",
@@ -75,7 +75,7 @@ TODO:
         }
     }
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
     {
     	"id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
         "main_language": "EN",
@@ -146,7 +146,7 @@ TODO:
 + Parameters
     + uuid: `minecraft:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX` (string, required) - Regex: `(discord|minecraft|player):(\S*)`
 
-+ Response 200 (application/json)
++ Response 200
 + Response 404
 + Response 429
 
@@ -201,7 +201,7 @@ Can only use the fields to be modified.
 + Response 404
 + Response 429
 
-### Update Player [PATCH /api/v1/player/{uuid}]
+### Update Player [PUT /api/v1/player/{uuid}]
 
 Pour update un object joueur entier.
 Needs a complete player object.
