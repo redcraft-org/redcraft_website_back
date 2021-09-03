@@ -14,42 +14,42 @@ TODO:
 ### List Player [GET /api/v1/player]
 
 + Response 200 (application/json)
-  [
-      {
-          "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
-          "main_language": "FR",
-          "languages": [
-              "FR",
-              "EN"
-          ],
-          "username": "lululombard",
-          "providers": {
-              "minecraft": {
-                  "last_username": "lululombard",
-                  "previous_username": "LuluQc",
-                  "provider_display_name": "Minecraft",
-                  "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-              },
-              "discord": {
-                  "last_username": "lululombard#1337",
-                  "previous_username": null,
-                  "provider_display_name": "Discord",
-                  "uuid": 123456789012345678
-              }
-          },
-          "attributes": {
-              "command_spy": 0,
-          }
-      },
-      ...
-  ]
+    [
+        {
+            "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
+            "main_language": "FR",
+            "languages": [
+                "FR",
+                "EN"
+            ],
+            "username": "lululombard",
+            "providers": {
+                "minecraft": {
+                    "last_username": "lululombard",
+                    "previous_username": "LuluQc",
+                    "provider_display_name": "Minecraft",
+                    "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                },
+                "discord": {
+                    "last_username": "lululombard#1337",
+                    "previous_username": null,
+                    "provider_display_name": "Discord",
+                    "uuid": "123456789012345678"
+                }
+            },
+            "attributes": {
+                "command_spy": 0,
+            }
+        },
+        ...
+    ]
 
 + Response 429
 
 ### Create Player [POST /api/v1/player]
 
 + Request (application/json)
-	+ Body
+    + Body
     {
         "main_language": "EN",
         "languages": [
@@ -67,7 +67,7 @@ TODO:
                 "last_username": "lululombard#1337",
                 "previous_username": null,
                 "provider_display_name": "Discord",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         },
         "attributes": {
@@ -77,7 +77,7 @@ TODO:
 
 + Response 201 (application/json)
     {
-    	"id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
+        "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
         "main_language": "EN",
         "languages": [
             "FR",
@@ -95,7 +95,7 @@ TODO:
                 "last_username": "lululombard#1337",
                 "previous_username": null,
                 "provider_display_name": "Discord",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         },
         "attributes": {
@@ -111,7 +111,7 @@ TODO:
 
 + Response 200 (application/json)
     {
-    	"id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
+        "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
         "main_language": "EN",
         "languages": [
             "FR",
@@ -129,7 +129,7 @@ TODO:
                 "last_username": "lululombard#1337",
                 "previous_username": null,
                 "provider_display_name": "Discord",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         },
         "attributes": {
@@ -160,19 +160,19 @@ Can only use the fields to be modified.
     + uuid: `minecraft:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX` (string, required) - Regex: `(discord|minecraft|player):(\S*)`
 
 + Request (application/json)
-	+ Body
+    + Body
     {
-    	"providers": {
+        "providers": {
             "discord": {
                 "last_username": "NewName#1337",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         }
     }
 
 + Response 200 (application/json)
     {
-    	"id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
+        "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
         "main_language": "EN",
         "languages": [
             "FR",
@@ -190,7 +190,7 @@ Can only use the fields to be modified.
                 "last_username": "NewName#1234",
                 "previous_username": "lululombard#1337",
                 "provider_display_name": "Discord",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         },
         "attributes": {
@@ -210,15 +210,13 @@ Needs a complete player object.
     + uuid: `minecraft:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX` (string, required) - Regex: `(discord|minecraft|player):(\S*)`
 
 + Request (application/json)
-	+ Body
+    + Body
     {
-    	"id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
         "main_language": "EN",
         "languages": [
             "FR",
             "EN"
         ],
-        "username": "lululombard",
         "providers": {
             "minecraft": {
                 "last_username": "lululombard",
@@ -230,7 +228,7 @@ Needs a complete player object.
                 "last_username": "NewName#1234",
                 "previous_username": "lululombard#1337",
                 "provider_display_name": "Discord",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         },
         "attributes": {
@@ -240,7 +238,7 @@ Needs a complete player object.
 
 + Response 200 (application/json)
     {
-    	"id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
+        "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
         "main_language": "EN",
         "languages": [
             "FR",
@@ -258,7 +256,7 @@ Needs a complete player object.
                 "last_username": "NewName#1234",
                 "previous_username": "lululombard#1337",
                 "provider_display_name": "Discord",
-                "uuid": 123456789012345678
+                "uuid": "123456789012345678"
             }
         },
         "attributes": {

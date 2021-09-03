@@ -22,50 +22,39 @@ Return a paginated list of article.
 + Parameters
     + language: `fr` (string, required) - Language of the article
     + category: `redstone` (enum[string], optional) - Type of article category
-		+ default: all
+        + default: all
         + members
             + `all`
             + `redstone`
             + `news`
             + `build`
-	+ per_page: 5 (number, optional) - Number of articles per page
-    	+ default: 10
+    + per_page: 5 (number, optional) - Number of articles per page
+        + default: 10
     + page: 3 (number, optional) - Current page
-    	+ default: 1
+        + default: 1
 
 + Response 200 (application/json)
   {
-      "current_page": 3,
-      "per_page": 5,
-      "links": {
-          "next_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=4",
-          "prev_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=2"
-      },
-      "articles": [
-          {
-              "id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-              "title": "Un super titre 22",
-              "overview": "libero repellat ipsum facilis dolorem esse officiis quam labore repellendus",
-              "category": "news",
-              "language": "fr",
-              "published_at": "2021-03-15T00:56:00Z",
-              "links": {
-                  "article": "https://redcraft.org/api/v1/fr/article/un-bon-test"
-              }
-          },
-          {
-              "id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-              "title": "Un super titre 5",
-              "overview": "deserunt eius dolor ipsam quo fugiat similique quidem corporis nulla",
-              "category": "build",
-              "language": "fr",
-              "published_at": "2021-03-04T18:42:00Z",
-              "links": {
-                  "article": "https://redcraft.org/api/v1/fr/article/quel-systeme"
-              }
-          },
-          ...
-      ]
+        "current_page": 3,
+        "per_page": 5,
+        "links": {
+            "next_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=4",
+            "prev_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=2"
+        },
+        "articles": [
+            {
+                "id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                "title": "Un super titre 22",
+                "overview": "libero repellat ipsum facilis dolorem esse officiis quam labore repellendus",
+                "category": "news",
+                "language": "fr",
+                "published_at": "2021-03-15T00:56:00Z",
+                "links": {
+                    "article": "https://redcraft.org/api/v1/fr/article/un-bon-test"
+                }
+            },
+            ...
+        ]
   }
 
 + Response 404
@@ -79,17 +68,18 @@ Return a paginated list of article.
 
 + Response 200 (application/json)
     {
-    	"id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-	    "title": "Un super titre 1",
-    	"overview": "molestias dolorum nobis odio dignissimos natus tempore consequuntur cupiditate error",
-	    "text": "Praesentium necessitatibus voluptates rem, molestias vero deserunt?",
-    	"category": "build",
-	    "language": "fr",
-    	"published_at": "2018-06-23T18:35:00Z",
-	    "links": {
-    	    "article": "https://redcraft.org/api/v1/fr/article/a-good-test"
-    	}
-	}
+        "id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+        "title": "Un super titre 1",
+        "overview": "molestias dolorum nobis odio dignissimos natus tempore consequuntur cupiditate error",
+        "text": "Praesentium necessitatibus voluptates rem, molestias vero deserunt?",
+        "category": "build",
+        "language": "fr",
+        "published_at": "2018-06-23T18:35:00Z",
+        "translation_source": "Likyaz",
+        "links": {
+            "article": "https://redcraft.org/api/v1/fr/article/a-good-test"
+        }
+    }
 
 + Response 404
 + Response 429
@@ -98,23 +88,23 @@ Return a paginated list of article.
 ### List last Article [GET]
 + Parameters
     + language: fr (string, required) - language of the article
-	+ count: 5 (number) - Number of articles to return
-		+ default: 5
+    + count: 5 (number) - Number of articles to return
+        + default: 5
 
 + Response 200 (application/json)
-	[
-      {
-          "id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-          "title": "Un super titre 1",
-          "overview": "molestias dolorum nobis odio dignissimos natus tempore consequuntur cupiditate error",
-          "category": "build",
-          "language": "fr",
-          "published_at": "2018-06-23T18:35:00Z",
-          "links": {
-              "article": "https://redcraft.org/api/v1/fr/article/un-bon-titre"
-          }
-      },
-      ...
+    [
+        {
+            "id": "article:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "title": "Un super titre 1",
+            "overview": "molestias dolorum nobis odio dignissimos natus tempore consequuntur cupiditate error",
+            "category": "build",
+            "language": "fr",
+            "published_at": "2018-06-23T18:35:00Z",
+            "links": {
+                "article": "https://redcraft.org/api/v1/fr/article/un-bon-titre"
+            }
+        },
+        ...
     ]
 
 + Response 429
@@ -129,44 +119,44 @@ Return a paginated list of article.
 + Parameters
     + language: `fr` (string, required) - Language of the article
     + category: `redstone` (enum[string], optional) - Type of article category
-		+ default: all
+        + default: all
         + members
             + `all`
             + `redstone`
             + `news`
             + `build`
-	+ per_page: 5 (number, optional) - Number of articles per page
-    	+ default: 10
+    + per_page: 5 (number, optional) - Number of articles per page
+        + default: 10
     + page: 3 (number, optional) - Current page
-    	+ default: 1
+        + default: 1
 
 + Response 200 (application/json)
   {
-      "current_page": 3,
-      "per_page": 5,
-      "links": {
-          "next_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=4",
-          "prev_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=2"
-      },
-      "posts": [
-          {
-              "id": "post:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-              "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-              "language": "fr",
-              "published_at": "2021-03-15T00:56:00Z",
-              "links": {
-                  "article": "https://redcraft.org/api/v1/fr/article/un-bon-test",
-                  "post": "https://redcraft.org/api/v1/fr/post/un-bon-test"
-              }
-          },
-          ...
-      ]
+        "current_page": 3,
+        "per_page": 5,
+        "links": {
+            "next_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=4",
+            "prev_page": "https://redcraft.org/api/v1/fr/article?category=red&per_page=5&page=2"
+        },
+        "posts": [
+            {
+                "id": "post:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                "language": "fr",
+                "published_at": "2021-03-15T00:56:00Z",
+                "links": {
+                    "article": "https://redcraft.org/api/v1/fr/article/un-bon-test",
+                    "post": "https://redcraft.org/api/v1/fr/post/un-bon-test"
+                }
+            },
+            ...
+        ]
   }
 
 + Response 404
 + Response 429
 
-# POST [/api/v1/post/{slug}]
+# POST [/api/v1/{language}/post/{slug}]
 ### Get Post [GET]
 
 + Parameters
@@ -193,10 +183,10 @@ Return a paginated list of article.
 + Parameters
     + language: `fr` (string, required) - Language of the post.
     + count: 5 (number) - Number of articles to return
-		+ default: 5
+        + default: 5
 
 + Response 200 (application/json)
-	[
+    [
         {
             "id": "post:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
             "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -221,139 +211,119 @@ Public interface of the articles.
 # DONATIONS [/api/v1/donation{?per_page,page}]
 ### List Donations [GET]
 + Parameters
-	+ per_page: 5 (number, optional) - Number of donations per page
-    	+ default: 10
+    + per_page: 5 (number, optional) - Number of donations per page
+        + default: 10
     + page: 3 (number, optional) - Current page
-    	+ default: 1
+        + default: 1
 
 + Response 200 (application/json)
-  {
-      "current_page": 3,
-      "per_page": 5,
-      "links": {
-          "next_page": "https://redcraft.org/api/v1/fr/donation?per_page=5&page=4",
-          "prev_page": "https://redcraft.org/api/v1/fr/donation?per_page=5&page=2"
-      },
-      "donations": [
-          {
-              "id": "donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-              "amount": 250,
-              "donated_at": "2022-02-09T19:17:03Z",
-              "refunded_at": null,
-              "player": {
-                  "id": 1,
-              	  "main_language": "FR",
-                  "languages": ["FR"],
-                  "providers": [
-                      {
-                          "last_username": "Likyaz",
-                          "previous_username": null,
-                          "provider_type": "Minecraft",
-                          "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                      },
-                      {
-                          "last_username": "Likyaz#3491",
-                          "previous_username": null,
-                          "provider_type": "Discord",
-                          "uuid": 123456789012345678
-                      }
-                  ],
-                  "links": {
-                      "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                  }
-              },
-              "links": {
-                  "donation": "https://redcraft.org/api/v1/donation/donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-              }
-          },
-          {
-              "id": "donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-              "amount": 750,
-              "donated_at": "2022-03-02T11:56:22Z",
-              "refunded_at": null,
-              "player": {
-                  "id": 3,
-              	  "main_language": "EN",
-                  "languages": ["EN", "FR"],
-                  "providers": [
-                      {
-                          "last_username": "lululombard",
-                          "previous_username": "LuluQc",
-                          "provider_type": "Minecraft"
-                      },
-                      {
-                          "last_username": "lululombard#1337",
-                          "previous_username": null,
-                          "provider_type": "Discord"
-                      }
-                  ],
-                  "links": {
-                      "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                  }
-              },
-              "links": {
-                  "donation": "https://redcraft.org/api/v1/donation/donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-              }
-          },
-          ...
-      ]
-  }
+    {
+        "current_page": 3,
+        "per_page": 5,
+        "links": {
+            "next_page": "https://redcraft.org/api/v1/fr/donation?per_page=5&page=4",
+            "prev_page": "https://redcraft.org/api/v1/fr/donation?per_page=5&page=2"
+        },
+        "donations": [
+            {
+                "id": "donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                "amount": 250,
+                "currency": "livre",
+                "conversion_rate": 1.175934,
+                "donated_at": "2022-02-09T19:17:03Z",
+                "refunded_at": null,
+                "player": {
+                    "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX",
+                    "main_language": "FR",
+                    "languages": ["FR"],
+                    "username": "Likyaz",
+                    "providers": [
+                        {
+                            "last_username": "Likyaz",
+                            "previous_username": null,
+                            "provider_type": "Minecraft",
+                            "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                        },
+                        {
+                            "last_username": "Likyaz#3491",
+                            "previous_username": null,
+                            "provider_type": "Discord",
+                            "uuid": 123456789012345678
+                        }
+                    ],
+                    "links": {
+                        "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                    }
+                },
+                "links": {
+                    "donation": "https://redcraft.org/api/v1/donation/donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                }
+            },
+            ...
+        ]
+    }
 
 + Response 429
 
 # DONATION [/api/v1/donation/{donation_id}]
 ### Get Donation [GET]
 + Parameters
-	+ donation_id: donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX (string) - Donation id
+    + donation_id: donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX (string) - Donation id
 
 + Response 200 (application/json)
-	{
-		"id": "donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+    {
+        "id": "donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
         "amount": 500,
-		"donated_at": "2022-02-09T19:17:00Z",
-		"refunded_at": null,
+        "currency": "euro",
+        "conversion_rate": 1.0,
+        "donated_at": "2022-02-09T19:17:00Z",
+        "refunded_at": null,
         "player": {
-             "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-             "main_language": "FR",
-             "languages": ["FR"],
-             "providers": [
-                 {
-                     "last_username": "Likyaz",
-                     "previous_username": null,
-                     "provider_type": "Minecraft"
-                 },
-                 {
-                     "last_username": "Likyaz#3491",
-                     "previous_username": null,
-                     "provider_type": "Discord"
-                 }
+            "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            "main_language": "FR",
+            "languages": ["FR"],
+            "username": "Likyaz",
+            "providers": [
+                {
+                    "last_username": "Likyaz",
+                    "previous_username": null,
+                    "provider_type": "Minecraft"
+                },
+                {
+                    "last_username": "Likyaz#3491",
+                    "previous_username": null,
+                    "provider_type": "Discord"
+                }
             ],
             "links": {
                 "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
             }
         }
-	}
+    }
 
 + Response 429
 
 
-# LAST DONATIONS [/api/v1/donation/last{?count}]
-### Last Donation [GET]
+# LIST LAST DONATION [/api/v1/donation/last{?count}]
+### List last Donation [GET]
 + Parameters
-	+ count: 5 (number, optional) - Number of donations
-		+ default: 5
+    + count: 5 (number, optional) - Number of donations
+        + default: 5
 
 + Response 200 (application/json)
-	[
+    [
         {
             "id": "donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
             "amount": 250,
+            "currency": "livre",
+            "conversion_rate": 1.155334,
             "donated_at": "2022-02-09T19:17:03Z",
             "refunded_at": null,
             "player": {
                 "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
                 "main_language": "FR",
                 "languages": ["FR"],
+                "username": "Likyaz",
                 "providers": [
                     {
                         "last_username": "Likyaz",
@@ -374,132 +344,105 @@ Public interface of the articles.
                 "donation": "https://redcraft.org/api/v1/donation/donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
             }
         },
+        ...
+    ]
+
++ Response 429
+
+# GRAPH DONATIONS [/api/v1/donation/stats/{delta_time}{?donation_count,refunded_count,donation_amount,refunded_amount,start_date,stop_date}]
+### Graph Donation [GET]
++ Parameters
+    + delta_time: y (emun(string)) - Regex: `[0-9]+[y|m|w|d|Y|M|W|D]`
+        + y | Y => Yearly
+        + m | M => Monthly
+        + w | W => Weekly
+        + d | D => Daily
+        + default: y
+    + start_date: `2018-01-01` (string, optional) - Start date
+        + default: `2021-01-01`
+    + stop_date: `2022-01-01` (string, optional) - Stop date
+        + default: now
+    + donation_count: 1 (bool, optional) -  Return `donation count`
+        + default: 1
+    + refunded_count: 1 (bool, optional) - Return `refunded count`
+        + default: 1
+    + donation_amount: 1 (bool, optional) - Return `donation amount`
+        + default: 1
+    + refunded_amount: 1 (bool, optional) - Return `refunded amount`
+        + default: 1
+
++ Response 200 (application/json)
+    [
         {
-            "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-            "amount": 750,
-            "donated_at": "2022-03-02T11:56:22Z",
-            "refunded_at": "2022-03-05T23:36:12Z",
-            "player": {
-                "id": 3,
-              	"main_language": "EN",
-                "languages": ["EN", "FR"],
-                "providers": [
-                    {
-                        "last_username": "lululombard",
-                        "previous_username": "LuluQc",
-                        "provider_type": "Minecraft",
-                        "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                    },
-                    {
-                        "last_username": "lululombard#1337",
-                        "previous_username": null,
-                        "provider_type": "Discord",
-                        "uuid": 123456789012345678
-                    }
-                ],
-                "links": {
-                    "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                }
-            },
-            "links": {
-                "donation": "https://redcraft.org/api/v1/donation/donation:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-            }
+            "donation_count": 36,
+            "refunded_count": 3,
+            "donation_amount": 42569,
+            "refunded_amount": 1917,
+            "date": "2018-12-31T00:00:00Z"
+        },
+        {
+            "donation_count": 36,
+            "refunded_count": 5,
+            "donation_amount": 38222,
+            "refunded_amount": 6161,
+            "date": "2019-12-31T00:00:00Z"
+        },
+        {
+            "donation_count": 40,
+            "refunded_count": 4,
+            "donation_amount": 124670,
+            "refunded_amount": 2810,
+            "date": "2020-12-31T00:00:00Z"
         },
         ...
     ]
 
 + Response 429
 
-# GRAPH DONATIONS [/api/v1/donation/stats/{delta_time}{?donation_count,refunded_count,donation_amount,refunded_amount}]
-### Graph Donation [GET]
-+ Parameters
-	+ delta_time: y (emun(string)) - Regex: `[0-9]+[y|m|w|d|Y|M|W|D]`
-    	+ y | Y => Yearly
-        + m | M => Monthly
-        + w | W => Weekly
-        + d | D => Daily
-		+ default: y
-	+ donation_count: 1 (bool, optional) -  Return `donation count`
-    	+ default: 1
-	+ refunded_count: 1 (bool, optional) - Return `refunded count`
-    	+ default: 1
-	+ donation_amount: 1 (bool, optional) - Return `donation amount`
-    	+ default: 1
-	+ refunded_amount: 1 (bool, optional) - Return `refunded amount`
-    	+ default: 1
-
-+ Response 200 (application/json)
-  [
-      {
-          "donation_count": 36,
-          "refunded_count": 3,
-          "donation_amount": 42569,
-          "refunded_amount": 1917,
-          "date": "2018-12-31T00:00:00Z"
-      },
-      {
-          "donation_count": 36,
-          "refunded_count": 5,
-          "donation_amount": 38222,
-          "refunded_amount": 6161,
-          "date": "2019-12-31T00:00:00Z"
-      },
-      {
-          "donation_count": 40,
-          "refunded_count": 4,
-          "donation_amount": 124670,
-          "refunded_amount": 2810,
-          "date": "2020-12-31T00:00:00Z"
-      },
-      ...
-  ]
-
-+ Response 429
-
-# STATS DONATIONS [/api/v1/donation/graph{?count}]
+# STATS DONATIONS [/api/v1/donation/graph{?donation_count,refunded_count,donation_amount,refunded_amount}]
 ### Stats Donation [GET]
 + Parameters
-	+ donation_count: 1 (bool, optional) -  Return `donation count`
-    	+ default: 1
-	+ refunded_count: 1 (bool, optional) - Return `refunded count`
-    	+ default: 1
-	+ donation_amount: 1 (bool, optional) - Return `donation amount`
-    	+ default: 1
-	+ refunded_amount: 1 (bool, optional) - Return `refunded amount`
-    	+ default: 1
+    + donation_count: 1 (bool, optional) -  Return `donation count`
+        + default: 1
+    + refunded_count: 1 (bool, optional) - Return `refunded count`
+        + default: 1
+    + donation_amount: 1 (bool, optional) - Return `donation amount`
+        + default: 1
+    + refunded_amount: 1 (bool, optional) - Return `refunded amount`
+        + default: 1
 
 
 + Response 200 (application/json)
-	{
-    	"total": {
-          "donation_count": 145,
-          "refunded_count": 10,
-          "donation_amount": 25830,
-          "refunded_amount": 3110,
+    {
+        "total": {
+            "donation_count": 145,
+            "refunded_count": 10,
+            "donation_amount": 25830,
+            "refunded_amount": 3110,
         },
         "curent_year": {
-          "donation_count": 89,
-          "refunded_count": 4,
-          "donation_amount": 13270,
-          "refunded_amount": 1820,
+            "donation_count": 89,
+            "refunded_count": 4,
+            "donation_amount": 13270,
+            "refunded_amount": 1820,
         },
         "curent_month": {
-          "donation_count": 10,
-          "refunded_count": 1,
-          "donation_amount": 1820,
-          "refunded_amount": 200,
+            "donation_count": 10,
+            "refunded_count": 1,
+            "donation_amount": 1820,
+            "refunded_amount": 200,
         },
         "curent_week" {
-          "donation_count": 2,
-          "refunded_count": 1,
-          "donation_amount": 350,
-          "refunded_amount": 200,
+            "donation_count": 2,
+            "refunded_count": 1,
+            "donation_amount": 350,
+            "refunded_amount": 200,
         },
         "current_day": {
-          "donation_count": 1,
-          "refunded_count": 0,
-          "donation_amount": 200,
-          "refunded_amount": 0,
+            "donation_count": 1,
+            "refunded_count": 0,
+            "donation_amount": 200,
+            "refunded_amount": 0,
         }
     }
 
@@ -508,7 +451,7 @@ Public interface of the articles.
 # DONATE [/api/v1/donation/donate]
 ### Donate [GET]
 + Parameters
-	TODO
+    TODO
 
 
 ----------------------------------
@@ -519,57 +462,59 @@ Public interface of the players.
 # Players [/api/v1/player{?per_page,page}]
 ### List Player [GET]
 + Parameters
-	+ per_page: 5 (number, optional) - Number of articles per page
-    	+ default: 10
+    + per_page: 5 (number, optional) - Number of articles per page
+        + default: 10
     + page: 1 (number, optional) - Current page
-    	+ default: 1
+        + default: 1
 
 + Response 200 (application/json)
-  {
-      "current_page": 3,
-      "per_page": 5,
-      "links": {
-          "next_page": "https://redcraft.org/api/v1/fr/player?per_page=5&page=2",
-          "prev_page": null
-      },
-      "players": [
-          {
-              "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-              "language": "FR",
-              "providers": [
-                  {
-                      "last_username": "Likyaz",
-                      "previous_username": null,
-                      "type_provider": "Minecraft",
-                      "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                  },
-                  {
-                      "last_username": "Likyaz",
-                      "previous_username": null,
-                      "type_provider": "Discord",
-                      "uuid": 123456789012345678
-                  }
-              ],
-              "links": {
-                  "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-              }
-          },
-          ...
-      ]
-  }
+    {
+        "current_page": 3,
+        "per_page": 5,
+        "links": {
+            "next_page": "https://redcraft.org/api/v1/fr/player?per_page=5&page=2",
+            "prev_page": null
+        },
+        "players": [
+            {
+                "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                "language": "FR",
+                "username": "Likyaz",
+                "providers": [
+                    {
+                        "last_username": "Likyaz",
+                        "previous_username": null,
+                        "type_provider": "Minecraft",
+                        "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                    },
+                    {
+                        "last_username": "Likyaz",
+                        "previous_username": null,
+                        "type_provider": "Discord",
+                        "uuid": 123456789012345678
+                    }
+                ],
+                "links": {
+                    "player": "https://redcraft.org/api/v1/player/player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+                }
+            },
+            ...
+        ]
+    }
 
 + Response 429
 
 
-# PLAYER [/api/v1/player/{player_id}]
+# PLAYER [/api/v1/player/{uuid}]
 ### Get Player [GET]
 + Parameters
-	+ player_id: 1 (number) - interne uuid
+    + uuid: `minecraft:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXX` (string, required) - Regex: `(discord|minecraft|player):(\S*)`
 
 + Response 200 (application/json)
     {
         "id": "player:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
         "language": "FR",
+        "username": "Likyaz",
         "providers": [
             {
                 "last_username": "Likyaz",
@@ -597,8 +542,8 @@ Public interface of the players.
 # LANGUAGE [/api/v1/network/language/supported]
 ### Get supported languages [GET]
 + Response 200 (application/json)
-	{
-    	"FR": "French",
+    {
+        "FR": "French",
         "EN": "English"
     }
 
@@ -606,24 +551,24 @@ Public interface of the players.
 
 ----------------------------------
 
-# Group Server MC
-# STATUS [/api/v1/server/status]
+# Group Network
+# STATUS [/api/v1/network/minecraft/status]
 ### Status [GET]
-	
+    
 + Response 200 (application/json)
-	[
-    	{
-        	"name": "survival",
+    [
+        {
+            "name": "survival",
             "crashed": 0,
             "running": 1
         },
-    	{
-        	"name": "crea",
+        {
+            "name": "crea",
             "crashed": 0,
             "running": 1
         },
-    	{
-        	"name": "redstone",
+        {
+            "name": "redstone",
             "crashed": 0,
             "running": 1
         }
@@ -631,9 +576,9 @@ Public interface of the players.
 
 + Response 429
 
-# VERSION [/api/v1/server/version]
+# VERSION [/api/v1/network/minecraft/version]
 ### Version [GET]
-	
+    
 + Response 200 (application/json)
   {
       "main_version": "1.16.2",
@@ -642,42 +587,37 @@ Public interface of the players.
 + Response 429
 
 
-# LIST PLAYER [/api/v1/server/player{?online}]
+# LIST PLAYER [/api/v1/network/minecraft/player]
 ### List Player [GET]
-+ Parameters
-	+ online: 1 (bool, optional) - select only online player or all player
-    	+ default: 1
-	
 + Response 200 (application/json)
-  {
-      "players": {
-          "fake_server": [
-            {
-                "uuid": "15f7b6b0-d787-48e2-b54b-0336e17f6316",
-                "name": "lululombard",
-                "display_name": "§4lululombard"
-            },
-            {
-                "uuid": "3d4213de-68fc-4494-b043-82a27e7ab56a",
-                "name": "Likyaz",
-                "display_name": "§4Likyaz"
-            },
-            ...
-          ]
-      }
-  }
+    {
+        "players": {
+            "fake_server": [
+                {
+                    "name": "lululombard",
+                    "display_name": "§4lululombard"
+                },
+                {
+                    "uuid": "3d4213de-68fc-4494-b043-82a27e7ab56a",
+                    "name": "Likyaz",
+                    "display_name": "§4Likyaz"
+                },
+                ...
+            ]
+        }
+    }
 
 + Response 429
 
-# SERVER MC PLAYER [/api/v1/server/player/count{?online}]
+# SERVER MC PLAYER [/api/v1/network/minecraft/player/count]
 ### Count Player [GET]
 + Parameters
-	+ online: 1 (bool, optional) - if set to 0 return all (including offline) players, otherwise return only online players
-    	+ default: 1
-	
+    + online: 1 (bool, optional) - if set to 0 return all (including offline) players, otherwise return only online players
+        + default: 1
+    
 + Response 200 (application/json)
-	{
-    	"count": 15
+    {
+        "count": 15
     }
 
 + Response 429
@@ -687,10 +627,10 @@ Public interface of the players.
 # Group Discord
 # COUNT PLAYER [/api/v1/network/discord/player/count]
 ### Count Player [GET]
-	
+    
 + Response 200 (application/json)
-	{
-    	"count": 49
+    {
+        "count": 49
     }
 + Response 429
 
