@@ -1,2 +1,0 @@
-class PaginationViewSet:
-    pass

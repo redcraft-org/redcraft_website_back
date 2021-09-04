@@ -40,24 +40,15 @@ class ArticleViewSet(viewsets.ViewSet):
 
         return serializer.data
 
-    def __get_list(self, language, category, nb='all'):
-        language = Language.objects.get(short_code=language.upper())
+    def __get_list(self, language, category, start, stop):
+        querry_param = {
+            'published_at__lte': datetime.datetime.now(),
+            'deleted_at': None,
+        }
+        if category != 'all':
+            querry_param['category'] = category.code
 
-        if category:
-            category = Category.objects.get(code=category)
-            list_article = Article.objects.filter(
-                published_at__lte=datetime.datetime.now(),
-                deleted_at=None,
-                category=category.code
-            ).order_by('-published_at')
-        else:
-            list_article = Article.objects.filter(
-                published_at__lte=datetime.datetime.now(),
-                deleted_at=None
-            ).order_by('-published_at')
-
-        if nb != 'all':
-            list_article = list_article[:nb]
+        list_article = Article.objects.filter(**querry_param).order_by('-published_at')[start:stop]
 
         data = []
         for article in list_article:
@@ -86,10 +77,22 @@ class ArticleViewSet(viewsets.ViewSet):
         return Response(status=404)
 
     def list(self, request, language):
-        return Response(self.__get_list(
-            language=language,
-            category=request.GET.get('category', None)
-        ))
+        per_page = request.GET.get('per_page', 10)
+        page = request.GET.get('page', 1) - 1
+        start = page * per_page
+        stop = start + per_page
+
+        try:
+            language = Language.objects.get(short_code=language.upper())
+            category = request.GET.get('category', 'all')
+            if category != 'all':
+                category = Category.objects.get()
+        except Language.DoesNotExist:
+            return Response({'error': ''}, 404)
+        except Category.DoesNotExist:
+            return Response({'error': ''}, 404)
+
+        return Response(self.__get_list(language, category, start, stop))
 
     @action(detail=False)
     def last(self, request, language):
