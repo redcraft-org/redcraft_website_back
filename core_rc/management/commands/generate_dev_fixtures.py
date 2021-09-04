@@ -1,14 +1,13 @@
 import os
 import json
 import random
-
+import uuid
 from lorem_text import lorem
 
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
 from core_rc import models
-
 
 
 class Command(BaseCommand):
@@ -57,11 +56,12 @@ class Command(BaseCommand):
 
         data = []
 
-        pk_article = 1
         pk_localized_article = 1
+        it_article = 0
 
         for category in category_list:
             for i in range(random.randint(min_article, max_article)):
+                pk_article = str(uuid.uuid4())
                 data += [{
                     'model': 'core_rc.Article',
                     'pk': pk_article,
@@ -79,17 +79,16 @@ class Command(BaseCommand):
                         'fields': {
                             'language': language.short_code,
                             'article': pk_article,
-                            'title': f'Un super titre {pk_article}',
+                            'title': f'Un super titre {it_article}',
                             'overview': lorem.words(10),
                             'text': lorem.paragraph(),
-                            'slug': f'un-super-slug-{pk_article}',
+                            'slug': f'un-super-slug-{it_article}',
                             'created_at': self.create_date(),
                             'modified_at': self.create_date(),
                         }
                     }]
                     pk_localized_article += 1
-
-                pk_article += 1
+                it_article += 1
 
         data_json = json.dumps(data)
         if (os.path.isfile(self.path)):

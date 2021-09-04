@@ -15,5 +15,5 @@ class ArticleSerializer(serializers.Serializer):
 
     def get_links(self, obj):
         return {
-            'article': f'127.0.0.1:8000/api/v1/{obj["language"]}/article/{obj["id"]}/a-good-test'
+            'article': f'127.0.0.1:8000/api/v1/{obj["language"]}/article/{obj["id"]}/{obj["slug"]}'
         }

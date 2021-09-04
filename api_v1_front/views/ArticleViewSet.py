@@ -35,6 +35,7 @@ class ArticleViewSet(viewsets.ViewSet):
             'category': localized_articles.article.category.code,
             'language': language.short_code.lower(),
             'published_at': article.published_at,
+            'slug': localized_articles.slug
         }, many=False)
 
         return serializer.data
@@ -67,12 +68,14 @@ class ArticleViewSet(viewsets.ViewSet):
                 'overview': localized_article.overview,
                 'category': localized_article.article.category.code,
                 'language': language.short_code.lower(),
+                'slug': localized_article.slug,
                 'published_at': article.published_at,
             }]
 
         serializer = ArticleSerializer(data, many=True)
         return serializer.data
 
+    # Action
     def retrieve(self, request, language, pk=None):
         resp = self.__get_article(
             language=language,
@@ -89,7 +92,7 @@ class ArticleViewSet(viewsets.ViewSet):
         ))
 
     @action(detail=False)
-    def last_article(self, request, language):
+    def last(self, request, language):
         return Response(self.__get_list(
             language=language,
             category=request.GET.get('category', None),

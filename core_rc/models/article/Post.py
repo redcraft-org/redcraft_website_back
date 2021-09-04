@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Post(models.Model):
@@ -16,6 +17,7 @@ class Post(models.Model):
         null=True
     )
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     published_at = models.DateTimeField(blank=True, null=True)
     deleted_at = models.DateTimeField(blank=True, null=True)
 
