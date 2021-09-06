@@ -30,9 +30,10 @@ class Language(models.Model):
     )
 
     short_code = models.CharField(max_length=5, choices=LANGUAGE_CODE, primary_key=True)
-
-    def get_name(self):
-        return self.LANGUAGE_CODE[self.short_code]
+    
+    @property
+    def name(self):
+        return dict(self.LANGUAGE_CODE)[self.short_code]
 
     def __str__(self):
         return f"<Language: {self.short_code} - {self.name}>"

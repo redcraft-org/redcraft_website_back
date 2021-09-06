@@ -43,6 +43,18 @@ class Command(BaseCommand):
         minutes = f'0{minutes}' if minutes < 10 else str(minutes)
 
         return f"20{year}-{mounth}-{day} {hours}:{minutes}Z"
+    
+    def create_title(self, language, it_article):
+        return {
+            'FR': f'Un super titre {it_article}',
+            'EN': f'A great title {it_article}'
+        }[language.short_code]
+    
+    def create_slug(self, language, it_article):
+        return {
+            'FR': f'un-super-titre-{it_article}',
+            'EN': f'a-great-title-{it_article}'
+        }[language.short_code]
 
     def handle(self, *arg, **options):
         if settings.ENVIRONMENT == 'prod':
@@ -79,10 +91,10 @@ class Command(BaseCommand):
                         'fields': {
                             'language': language.short_code,
                             'article': pk_article,
-                            'title': f'Un super titre {it_article}',
+                            'title': self.create_title(language, it_article),
                             'overview': lorem.words(10),
                             'text': lorem.paragraph(),
-                            'slug': f'un-super-slug-{it_article}',
+                            'slug': self.create_slug(language, it_article),
                             'created_at': self.create_date(),
                             'modified_at': self.create_date(),
                         }

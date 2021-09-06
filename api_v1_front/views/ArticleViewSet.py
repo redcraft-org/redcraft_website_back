@@ -2,6 +2,7 @@ import datetime
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.urls import reverse
 
 from core_rc.models import (
     LocalizedArticle,
@@ -13,91 +14,83 @@ from core_rc.models import (
     Language,
 )
 
-from api_v1_front.serializer.ArticleSerializer import ArticleSerializer
+from api_v1_front.serializer.ArticleSerializer import ArticleSerializer, ArticleDetailSerializer
 
 
 class ArticleViewSet(viewsets.ViewSet):
-
-    def __get_article(self, language, article_id):
-        language = Language.objects.get(short_code=language.upper())
-        article = Article.objects.get(id=article_id)
-
-        if (article.deleted_at):
-            return False
-
-        localized_articles = LocalizedArticle.objects.get(article=article.id, language=language)
-
-        serializer = ArticleSerializer({
-            'id': localized_articles.article.id,
-            'title': localized_articles.title,
-            'overview': localized_articles.overview,
-            'text': localized_articles.text,
-            'category': localized_articles.article.category.code,
-            'language': language.short_code.lower(),
-            'published_at': article.published_at,
-            'slug': localized_articles.slug
-        }, many=False)
-
-        return serializer.data
-
-    def __get_list(self, language, category, start, stop):
+    def __get_querryset_list(self, language, category):
+        try:
+            language = Language.objects.get(short_code=language.upper())
+            if category != 'all':
+                category = Category.objects.get(code=category)
+        except Language.DoesNotExist:
+            raise Error()
+        except Category.DoesNotExist:
+            raise Error()
+        
         querry_param = {
-            'published_at__lte': datetime.datetime.now(),
-            'deleted_at': None,
+            'language': language,
+            'article__published_at__lte': datetime.datetime.now(),
+            'article__deleted_at': None,
         }
+
         if category != 'all':
-            querry_param['category'] = category.code
+            querry_param['article__category'] = category.code
 
-        list_article = Article.objects.filter(**querry_param).order_by('-published_at')[start:stop]
+        querryset_localized_articles = LocalizedArticle.objects.filter(**querry_param)\
+            .select_related('article', 'language', 'article__category')\
+            .defer('text')\
+            .order_by('-article__published_at')
+        
+        return querryset_localized_articles
 
-        data = []
-        for article in list_article:
-            localized_article = LocalizedArticle.objects.get(language=language, article=article)
-            data += [{
-                'id': article.id,
-                'title': localized_article.title,
-                'overview': localized_article.overview,
-                'category': localized_article.article.category.code,
-                'language': language.short_code.lower(),
-                'slug': localized_article.slug,
-                'published_at': article.published_at,
-            }]
+    def retrieve(self, request, language, pk):
+        try:
+            language = Language.objects.get(short_code=language.upper())
+        except Language.DoesNotExist:
+            return Response(status=404)
 
-        serializer = ArticleSerializer(data, many=True)
-        return serializer.data
+        article = Article.objects.get(localizedarticle__slug=pk)
+        localized_article = LocalizedArticle.objects\
+            .select_related('article', 'language', 'article__category')\
+            .get(article=article.id, language=language)
 
-    # Action
-    def retrieve(self, request, language, pk=None):
-        resp = self.__get_article(
-            language=language,
-            article_id=pk
-        )
-        if resp:
-            return Response(resp)
-        return Response(status=404)
+        serializer = ArticleDetailSerializer(localized_article, many=False)
+        return Response(serializer.data)
 
     def list(self, request, language):
         per_page = request.GET.get('per_page', 10)
-        page = request.GET.get('page', 1) - 1
-        start = page * per_page
+        page = int(request.GET.get('page', 1))
+        start = (page - 1) * per_page
         stop = start + per_page
 
+        category = request.GET.get('category', 'all')
         try:
-            language = Language.objects.get(short_code=language.upper())
-            category = request.GET.get('category', 'all')
-            if category != 'all':
-                category = Category.objects.get()
-        except Language.DoesNotExist:
-            return Response({'error': ''}, 404)
-        except Category.DoesNotExist:
-            return Response({'error': ''}, 404)
+            querryset_localized_articles = self.__get_querryset_list(language, category)
+        except:
+            return Response(status=404)
+            
 
-        return Response(self.__get_list(language, category, start, stop))
+        serializer = ArticleSerializer(querryset_localized_articles[start:stop], many=True)
+        return Response({
+            'current_page': page,
+            'per_page': per_page,
+            'links': {
+                'next_page': f'{reverse("article-list", args=[language])}?per_page={per_page}&page={page}',
+                'prev_page': f'{reverse("article-list", args=[language])}?per_page={per_page}&page={page}',
+            },
+            'articles': serializer.data
+        })
 
     @action(detail=False)
     def last(self, request, language):
-        return Response(self.__get_list(
-            language=language,
-            category=request.GET.get('category', None),
-            nb=int(request.GET.get('nb', 5))
-        ))
+        count = request.GET.get('count', 5)
+
+        category = request.GET.get('category', 'all')
+        try:
+            querryset_localized_articles = self.__get_querryset_list(language, category)
+        except:
+            return Response(status=404)
+
+        serializer = ArticleSerializer(querryset_localized_articles[:count], many=True)
+        return Response(serializer.data)

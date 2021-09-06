@@ -8,7 +8,8 @@ class LocalizedArticle(models.Model):
     )
     article = models.ForeignKey(
         'Article',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='localizedarticle'
     )
 
     title = models.CharField(max_length=42)
