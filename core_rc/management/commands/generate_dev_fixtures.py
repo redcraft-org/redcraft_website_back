@@ -12,7 +12,8 @@ from core_rc import models
 
 class Command(BaseCommand):
     help = 'Generate dev fixtures.'
-    path = "core_rc/fixtures/dev_fixtures.json"
+    path = 'core_rc/fixtures'
+    name_fixture = 'dev_fixtures.json'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -56,8 +57,15 @@ class Command(BaseCommand):
             'EN': f'a-great-title-{it_article}'
         }[language.short_code]
 
+    def create_text_html(self, title):
+        text_html = f'<div>\n<h1>{title}</h1>\n'
+        for i in range(random.randint(2, 4)):
+            text_html += f'<p>{lorem.paragraph()}</p>\n'
+        text_html += '</div>'
+        return text_html
+
     def handle(self, *arg, **options):
-        if settings.ENVIRONMENT == 'prod':
+        if settings.ENVIRONMENT == 'production':
             self.stdout.write('!!! THIS COMMANDE IS ONLY FOR DEVLOPMENT OR TESTING !!!')
 
         language_list = models.Language.objects.all()
@@ -85,15 +93,16 @@ class Command(BaseCommand):
                 }]
 
                 for language in language_list:
+                    title = self.create_title(language, it_article)
                     data += [{
                         'model': 'core_rc.LocalizedArticle',
                         'pk': pk_localized_article,
                         'fields': {
                             'language': language.short_code,
                             'article': pk_article,
-                            'title': self.create_title(language, it_article),
+                            'title': title,
                             'overview': lorem.words(10),
-                            'text': lorem.paragraph(),
+                            'text': self.create_text_html(title),
                             'slug': self.create_slug(language, it_article),
                             'created_at': self.create_date(),
                             'modified_at': self.create_date(),
@@ -103,11 +112,23 @@ class Command(BaseCommand):
                 it_article += 1
 
         data_json = json.dumps(data)
-        if (os.path.isfile(self.path)):
-            os.remove(self.path)
 
-        f = open(self.path, "a")
+        # Create folder if don't existe
+        if not os.path.exists(self.path):
+            os.makedirs(self.path)
+
+        path = f'{self.path}/{self.name_fixture}'
+        # Delete file if existe
+        if (os.path.isfile(path)):
+            os.remove(path)
+
+        f = open(path, "a")
         f.write(data_json)
         f.close()
 
-        self.stdout.write(f'Devlopement fixtures is generate in {0}!')
+        self.stdout.write(
+            f'Devlopement fixtures is generate in {path}!\n' +
+            'Generate:\n' +
+            f'\t- {it_article} Article\n' +
+            f'\t- {pk_localized_article - 1} LocalizedArticle\n'
+        )
