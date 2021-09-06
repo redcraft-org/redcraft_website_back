@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import serializers
 
 from core_rc import models
@@ -16,7 +17,7 @@ class ArticleSerializer(serializers.Serializer):
 
     def get_links(self, obj):
         return {
-            'article': f'127.0.0.1:8000/api/v1/{obj.language.short_code.lower()}/article/{obj.slug}'
+            'article': self.context['request'].build_absolute_uri(reverse("article-detail", args=[obj.language.short_code, obj.slug]))
         }
 
     def get_id(self, obj):
