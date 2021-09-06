@@ -66,7 +66,7 @@ class Command(BaseCommand):
 
     def handle(self, *arg, **options):
         if settings.ENVIRONMENT == 'production':
-            self.stdout.write('!!! THIS COMMANDE IS ONLY FOR DEVLOPMENT OR TESTING !!!')
+            self.stdout.write('!!! THIS COMMAND IS ONLY FOR DEVLOPMENT OR TESTING !!!')
 
         language_list = models.Language.objects.all()
         category_list = models.Category.objects.all()
@@ -113,12 +113,12 @@ class Command(BaseCommand):
 
         data_json = json.dumps(data)
 
-        # Create folder if don't existe
+        # Create directories if doesn't exist
         if not os.path.exists(self.path):
             os.makedirs(self.path)
 
         path = f'{self.path}/{self.name_fixture}'
-        # Delete file if existe
+        # Delete file if it exists
         if (os.path.isfile(path)):
             os.remove(path)
 
@@ -127,8 +127,8 @@ class Command(BaseCommand):
         f.close()
 
         self.stdout.write(
-            f'Devlopement fixtures is generate in {path}!\n' +
-            'Generate:\n' +
+            f'Devlopement fixtures are generated in {path}!\n' +
+            'Generated:\n' +
             f'\t- {it_article} Article\n' +
             f'\t- {pk_localized_article - 1} LocalizedArticle\n'
         )

@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
     def handle(self, *arg, **options):
         if settings.ENVIRONMENT == 'production':
-            self.stdout.write('!!! THIS COMMANDE IS ONLY FOR DEVLOPMENT OR TESTING !!!')
+            self.stdout.write('!!! THIS COMMAND IS ONLY FOR DEVLOPMENT OR TESTING !!!')
 
         # Purge table with fixture
         models.LocalizedArticle.objects.all().delete()
