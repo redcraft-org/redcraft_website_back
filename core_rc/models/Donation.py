@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Donation(models.Model):
@@ -10,6 +11,8 @@ class Donation(models.Model):
         ('mc', 'minecraft'),
         ('ds', 'discord'),
     )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     player = models.ForeignKey(
         'Player',

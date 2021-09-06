@@ -8,13 +8,17 @@ class LocalizedArticle(models.Model):
     )
     article = models.ForeignKey(
         'Article',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='localizedarticle'
     )
 
     title = models.CharField(max_length=42)
     overview = models.CharField(max_length=255, blank=True, null=True)
     text = models.TextField()
-    slug = models.SlugField(max_length=42, blank=True, null=True)
+    slug = models.SlugField(max_length=42, blank=True, null=True, unique=True)
+
+    translation_source = models.CharField(max_length=255, default='None')
+    author = models.CharField(max_length=255, default='None')
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

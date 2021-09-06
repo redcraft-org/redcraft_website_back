@@ -1,7 +1,7 @@
 import os
 import json
 import random
-
+import uuid
 from lorem_text import lorem
 
 from django.core.management.base import BaseCommand, CommandError
@@ -10,10 +10,10 @@ from django.conf import settings
 from core_rc import models
 
 
-
 class Command(BaseCommand):
     help = 'Generate dev fixtures.'
-    path = "core_rc/fixtures/dev_fixtures.json"
+    path = 'core_rc/fixtures'
+    name_fixture = 'dev_fixtures.json'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -44,10 +44,29 @@ class Command(BaseCommand):
         minutes = f'0{minutes}' if minutes < 10 else str(minutes)
 
         return f"20{year}-{mounth}-{day} {hours}:{minutes}Z"
+    
+    def create_title(self, language, it_article):
+        return {
+            'FR': f'Un super titre {it_article}',
+            'EN': f'A great title {it_article}'
+        }[language.short_code]
+    
+    def create_slug(self, language, it_article):
+        return {
+            'FR': f'un-super-titre-{it_article}',
+            'EN': f'a-great-title-{it_article}'
+        }[language.short_code]
+
+    def create_text_html(self, title):
+        text_html = f'<div>\n<h1>{title}</h1>\n'
+        for i in range(random.randint(2, 4)):
+            text_html += f'<p>{lorem.paragraph()}</p>\n'
+        text_html += '</div>'
+        return text_html
 
     def handle(self, *arg, **options):
-        if settings.ENVIRONMENT == 'prod':
-            self.stdout.write('!!! THIS COMMANDE IS ONLY FOR DEVLOPMENT OR TESTING !!!')
+        if settings.ENVIRONMENT == 'production':
+            self.stdout.write('!!! THIS COMMAND IS ONLY FOR DEVLOPMENT OR TESTING !!!')
 
         language_list = models.Language.objects.all()
         category_list = models.Category.objects.all()
@@ -57,11 +76,12 @@ class Command(BaseCommand):
 
         data = []
 
-        pk_article = 1
         pk_localized_article = 1
+        it_article = 0
 
         for category in category_list:
             for i in range(random.randint(min_article, max_article)):
+                pk_article = str(uuid.uuid4())
                 data += [{
                     'model': 'core_rc.Article',
                     'pk': pk_article,
@@ -73,30 +93,42 @@ class Command(BaseCommand):
                 }]
 
                 for language in language_list:
+                    title = self.create_title(language, it_article)
                     data += [{
                         'model': 'core_rc.LocalizedArticle',
                         'pk': pk_localized_article,
                         'fields': {
                             'language': language.short_code,
                             'article': pk_article,
-                            'title': f'Un super titre {pk_article}',
+                            'title': title,
                             'overview': lorem.words(10),
-                            'text': lorem.paragraph(),
-                            'slug': f'un-super-slug-{pk_article}',
+                            'text': self.create_text_html(title),
+                            'slug': self.create_slug(language, it_article),
                             'created_at': self.create_date(),
                             'modified_at': self.create_date(),
                         }
                     }]
                     pk_localized_article += 1
-
-                pk_article += 1
+                it_article += 1
 
         data_json = json.dumps(data)
-        if (os.path.isfile(self.path)):
-            os.remove(self.path)
 
-        f = open(self.path, "a")
+        # Create directories if doesn't exist
+        if not os.path.exists(self.path):
+            os.makedirs(self.path)
+
+        path = f'{self.path}/{self.name_fixture}'
+        # Delete file if it exists
+        if (os.path.isfile(path)):
+            os.remove(path)
+
+        f = open(path, "a")
         f.write(data_json)
         f.close()
 
-        self.stdout.write(f'Devlopement fixtures is generate in {0}!')
+        self.stdout.write(
+            f'Devlopement fixtures are generated in {path}!\n' +
+            'Generated:\n' +
+            f'\t- {it_article} Article\n' +
+            f'\t- {pk_localized_article - 1} LocalizedArticle\n'
+        )
