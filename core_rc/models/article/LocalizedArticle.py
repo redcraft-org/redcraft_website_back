@@ -15,7 +15,7 @@ class LocalizedArticle(models.Model):
     title = models.CharField(max_length=42)
     overview = models.CharField(max_length=255, blank=True, null=True)
     text = models.TextField()
-    slug = models.SlugField(max_length=42, blank=True, null=True)
+    slug = models.SlugField(max_length=42, blank=True, null=True, unique=True)
 
     translation_source = models.CharField(max_length=255, default='None')
     author = models.CharField(max_length=255, default='None')
