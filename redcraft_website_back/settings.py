@@ -27,10 +27,10 @@ BASE_URL = os.getenv("BASE_URL", "127.0.0.1:8000")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "development")
+DEBUG = os.getenv("DEBUG", "True") in ['true', 'True', '1']
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testing.redcraft.org', 'staging.redcraft.org', 'redcraft.org']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'debug_toolbar',
 
     'core_rc.apps.CoreRcConfig',
     'api_v1_front.apps.ApiV1FrontConfig',
@@ -58,7 +59,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
+]
+
+INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
 ]
 
 ROOT_URLCONF = 'redcraft_website_back.urls'

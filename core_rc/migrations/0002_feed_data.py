@@ -17,8 +17,8 @@ def init_data(apps, schema_editor):
     language_en.save()
 
     # Create Category
-    category_redstone = Category.objects.create(code='red')
-    category_bluid = Category.objects.create(code='bluid')
+    category_redstone = Category.objects.create(code='redstone')
+    category_bluid = Category.objects.create(code='build')
     category_news = Category.objects.create(code='news')
 
     category_redstone.save()
@@ -32,7 +32,7 @@ def init_data(apps, schema_editor):
     save_obj(category_redstone, language_fr, 'Redstone')
     save_obj(category_redstone, language_en, 'Redstone')
     save_obj(category_bluid, language_fr, 'Construction')
-    save_obj(category_bluid, language_en, 'Bluid')
+    save_obj(category_bluid, language_en, 'Build')
     save_obj(category_news, language_fr, 'Nouvelles')
     save_obj(category_news, language_en, 'News')
 

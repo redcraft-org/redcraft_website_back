@@ -1,1 +1,3 @@
 from api_v1_front.views.ArticleViewSet import ArticleViewSet
+from api_v1_front.views.DonationViewSet import DonationViewSet
+from api_v1_front.views.PlayerViewSet import PlayerViewSet
