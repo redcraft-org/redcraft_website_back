@@ -17,7 +17,7 @@ def init_data(apps, schema_editor):
     language_en.save()
 
     # Create Category
-    category_redstone = Category.objects.create(code='red')
+    category_redstone = Category.objects.create(code='redstone')
     category_bluid = Category.objects.create(code='bluid')
     category_news = Category.objects.create(code='news')
 

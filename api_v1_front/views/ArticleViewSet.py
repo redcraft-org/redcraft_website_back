@@ -99,12 +99,12 @@ class ArticleViewSet(viewsets.ViewSet):
                 'prev_page': f'{url}?per_page={per_page}&page={page-1}' if page > 1 else None,
                 'next_page': f'{url}?per_page={per_page}&page={page+1}' if page < count_page else None,
             },
-            'articles': serializer.data
+            'list': serializer.data
         })
 
     @action(detail=False)
     def last(self, request, language):
-        count = request.GET.get('count', 5)
+        count = int(request.GET.get('count', 5))
 
         category = request.GET.get('category', 'all')
         try:

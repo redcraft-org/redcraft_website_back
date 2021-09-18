@@ -2,12 +2,16 @@ import os
 import json
 import random
 import uuid
-from lorem_text import lorem
+import itertools
 
+from lorem_text import lorem
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
 from core_rc import models
+from core_rc.management.commands.utils.ArticleFactory import ArticleFactory
+from core_rc.management.commands.utils.PlayerFactory import PlayerFactory
+from core_rc.management.commands.utils.DonationFactory import DonationFactory
 
 
 class Command(BaseCommand):
@@ -17,52 +21,33 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'min_article',
+            'count_article',
             nargs='+',
             type=int,
             help='Minimum article by category',
             default=15
         )
         parser.add_argument(
-            'max_article',
+            'count_player',
             nargs='+',
             type=int,
             help='Maximum article by category',
             default=40
         )
-    
-    def create_date(self):
-        year = random.randint(18, 22)
-        mounth  = random.randint(1,12)
-        day = random.randint(1, 27)
-        hours = random.randint(0, 23)
-        minutes = random.randint(0, 59)
-
-        mounth = f'0{mounth}' if mounth < 10 else str(mounth)
-        day = f'0{day}' if day < 10 else str(day)
-        hours = f'0{hours}' if hours < 10 else str(hours)
-        minutes = f'0{minutes}' if minutes < 10 else str(minutes)
-
-        return f"20{year}-{mounth}-{day} {hours}:{minutes}Z"
-    
-    def create_title(self, language, it_article):
-        return {
-            'FR': f'Un super titre {it_article}',
-            'EN': f'A great title {it_article}'
-        }[language.short_code]
-    
-    def create_slug(self, language, it_article):
-        return {
-            'FR': f'un-super-titre-{it_article}',
-            'EN': f'a-great-title-{it_article}'
-        }[language.short_code]
-
-    def create_text_html(self, title):
-        text_html = f'<div>\n<h1>{title}</h1>\n'
-        for i in range(random.randint(2, 4)):
-            text_html += f'<p>{lorem.paragraph()}</p>\n'
-        text_html += '</div>'
-        return text_html
+        parser.add_argument(
+            'count_donation',
+            nargs='+',
+            type=int,
+            help='Maximum article by category',
+            default=40
+        )
+        parser.add_argument(
+            'count_discount',
+            nargs='+',
+            type=int,
+            help='Maximum article by category',
+            default=40
+        )
 
     def handle(self, *arg, **options):
         if settings.ENVIRONMENT == 'production':
@@ -71,47 +56,18 @@ class Command(BaseCommand):
         language_list = models.Language.objects.all()
         category_list = models.Category.objects.all()
 
-        min_article = options['min_article'][0]
-        max_article = options['max_article'][0]
+        count_article = options['count_article'][0]
+        count_player = options['count_player'][0]
+        count_donation = options['count_donation'][0]
+        count_discount = options['count_discount'][0]
 
-        data = []
+        # Generate data
+        data_article = ArticleFactory().generate(count_article, language_list, category_list)
+        data_player = PlayerFactory().generate(count_player)
+        data_donation = DonationFactory().generate(count_donation, count_discount, data_player['data_player'])
 
-        pk_localized_article = 1
-        it_article = 0
-
-        for category in category_list:
-            for i in range(random.randint(min_article, max_article)):
-                pk_article = str(uuid.uuid4())
-                data += [{
-                    'model': 'core_rc.Article',
-                    'pk': pk_article,
-                    'fields': {
-                        'category_id': category.code,
-                        'published_at': self.create_date(),
-                        'deleted_at': self.create_date() if random.random() < 0.1 else None
-                    }
-                }]
-
-                for language in language_list:
-                    title = self.create_title(language, it_article)
-                    data += [{
-                        'model': 'core_rc.LocalizedArticle',
-                        'pk': pk_localized_article,
-                        'fields': {
-                            'language': language.short_code,
-                            'article': pk_article,
-                            'title': title,
-                            'overview': lorem.words(10),
-                            'text': self.create_text_html(title),
-                            'slug': self.create_slug(language, it_article),
-                            'created_at': self.create_date(),
-                            'modified_at': self.create_date(),
-                        }
-                    }]
-                    pk_localized_article += 1
-                it_article += 1
-
-        data_json = json.dumps(data)
+        data = dict(data_article, **data_player, **data_donation)
+        data_list = list(itertools.chain.from_iterable([item for _, item in data.items()]))
 
         # Create directories if doesn't exist
         if not os.path.exists(self.path):
@@ -123,12 +79,18 @@ class Command(BaseCommand):
             os.remove(path)
 
         f = open(path, "a")
-        f.write(data_json)
+        f.write(json.dumps(data_list))
         f.close()
 
         self.stdout.write(
-            f'Devlopement fixtures are generated in {path}!\n' +
+            f'Devlopement fixtures are generated in \'{path}\'!\n' +
             'Generated:\n' +
-            f'\t- {it_article} Article\n' +
-            f'\t- {pk_localized_article - 1} LocalizedArticle\n'
+            self.__create_str_list(data)
         )
+
+    @staticmethod
+    def __create_str_list(data):
+        str_list = ''
+        for key, item in data.items():
+            str_list += f'\t{len(item)} {key}\n'
+        return str_list

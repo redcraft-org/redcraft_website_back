@@ -1,6 +1,6 @@
 from rest_framework.routers import Route, DynamicRoute, SimpleRouter
 
-class ArticleRouter(SimpleRouter):
+class BaseRouter(SimpleRouter):
     routes = [
         Route(
             url=r'^{prefix}/$',
@@ -10,8 +10,8 @@ class ArticleRouter(SimpleRouter):
             initkwargs={'suffix': 'List'}
         ),
         DynamicRoute(
-            url=r'^{prefix}/{url_path}/$',
-            name='{basename}-{url_name}',
+            url=r'^{prefix}/last/$',
+            name='{basename}-last',
             detail=False,
             initkwargs={}
         ),
