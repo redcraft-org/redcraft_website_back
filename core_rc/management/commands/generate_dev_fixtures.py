@@ -77,7 +77,6 @@ class Command(BaseCommand):
 
         with open(path, "w") as f:
             json.dump(data_list, f)
-        f.close()
 
         self.stdout.write(
             f'Devlopement fixtures are generated in \'{path}\'!\n' +
