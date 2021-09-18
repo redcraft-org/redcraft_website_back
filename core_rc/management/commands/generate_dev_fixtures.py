@@ -74,12 +74,9 @@ class Command(BaseCommand):
             os.makedirs(self.path)
 
         path = f'{self.path}/{self.name_fixture}'
-        # Delete file if it exists
-        if (os.path.isfile(path)):
-            os.remove(path)
 
-        f = open(path, "a")
-        f.write(json.dumps(data_list))
+        with open(path, "w") as f:
+            json.dump(data_list, f)
         f.close()
 
         self.stdout.write(

@@ -24,6 +24,6 @@ urlpatterns = [
 
     path('api/v1/', include('api_v1_front.urls')),
     path('r/', include('url_shortener_v1.urls')),
-    path('__debug__/', include(debug_toolbar.urls)),
+    path('__debug__/', include(debug_toolbar.urls)), # TODO: check prod
 
 ]
