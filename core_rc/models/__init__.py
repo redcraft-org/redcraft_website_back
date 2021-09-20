@@ -6,7 +6,6 @@ from core_rc.models.PlayerInfoProvider import PlayerInfoProvider
 from core_rc.models.PlayerLanguage import PlayerLanguage
 
 from core_rc.models.article.Article import Article
-from core_rc.models.article.ArticleLanguage import ArticleLanguage
 from core_rc.models.article.Category import Category
 from core_rc.models.article.Post import Post
 from core_rc.models.article.LocalizedArticle import LocalizedArticle

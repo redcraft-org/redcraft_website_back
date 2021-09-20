@@ -36,14 +36,14 @@ class Utils:
         return {
             'FR': f'Un super titre {it_article}',
             'EN': f'A great title {it_article}'
-        }[language.short_code]
+        }[language]
     
     @staticmethod
     def create_slug(language, it_article):
         return {
             'FR': f'un-super-titre-{it_article}',
             'EN': f'a-great-title-{it_article}'
-        }[language.short_code]
+        }[language]
 
     @staticmethod
     def create_text_html(title):

@@ -6,4 +6,4 @@ class Language(models.Model):
     name = models.CharField(max_length=64)
 
     def __str__(self):
-        return f"<Language: {self.short_code} - {self.name}>"
+        return f"<Language: {self.code} - {self.name}>"

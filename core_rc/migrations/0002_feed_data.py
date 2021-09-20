@@ -41,22 +41,6 @@ def create_languages(Language):
         languages[language_code].save()
     return languages
 
-def create_articles_languages(ArticleLanguage, languages):
-    article_language_fr = ArticleLanguage.objects.create(
-        language=languages['FR']
-    )
-    article_language_en = ArticleLanguage.objects.create(
-        language=languages['EN']
-    )
-
-    article_language_fr.save()
-    article_language_en.save()
-
-    return {
-        'FR': article_language_fr,
-        'EN': article_language_en,
-    }
-
 def create_category(Category):
     category_redstone = Category.objects.create(code='redstone')
     category_bluid = Category.objects.create(code='build')
@@ -72,28 +56,26 @@ def create_category(Category):
         'news':category_news,
     }
 
-def create_localized_categorys(LocalizedCategory, articles_languages, categorys):
+def create_localized_categorys(LocalizedCategory, languages, categorys):
     def save_obj(category, language, name):
         LocalizedCategory.objects.create(name=name, language=language, category=category).save()
 
-    save_obj(categorys['redstone'], articles_languages['FR'], 'Redstone')
-    save_obj(categorys['redstone'], articles_languages['EN'], 'Redstone')
-    save_obj(categorys['build'], articles_languages['FR'], 'Construction')
-    save_obj(categorys['build'], articles_languages['EN'], 'Build')
-    save_obj(categorys['news'], articles_languages['FR'], 'Nouvelles')
-    save_obj(categorys['news'], articles_languages['EN'], 'News')
+    save_obj(categorys['redstone'], languages['FR'], 'Redstone')
+    save_obj(categorys['redstone'], languages['EN'], 'Redstone')
+    save_obj(categorys['build'], languages['FR'], 'Construction')
+    save_obj(categorys['build'], languages['EN'], 'Build')
+    save_obj(categorys['news'], languages['FR'], 'Nouvelles')
+    save_obj(categorys['news'], languages['EN'], 'News')
 
 def init_data(apps, schema_editor):
     # Get models
     Language = apps.get_model('core_rc', 'Language')
-    ArticleLanguage = apps.get_model('core_rc', 'ArticleLanguage')
     Category = apps.get_model('core_rc', 'Category')
     LocalizedCategory = apps.get_model('core_rc', 'LocalizedCategory')
 
     languages = create_languages(Language)
-    articles_languages = create_articles_languages(ArticleLanguage, languages)
     categorys = create_category(Category)
-    create_localized_categorys(LocalizedCategory, articles_languages, categorys)
+    create_localized_categorys(LocalizedCategory, languages, categorys)
 
 class Migration(migrations.Migration):
 

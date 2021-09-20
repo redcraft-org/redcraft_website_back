@@ -3,7 +3,7 @@ from django.db import models
 
 class LocalizedArticle(models.Model):
     language = models.ForeignKey(
-        'ArticleLanguage',
+        'Language',
         on_delete=models.CASCADE
     )
     article = models.ForeignKey(
@@ -29,4 +29,4 @@ class LocalizedArticle(models.Model):
         ]
 
     def __str__(self):
-        return f"<LocalizedArticle: {self.article.id} - {self.language.short_code}>"
+        return f"<LocalizedArticle: {self.article.id} - {self.language.code}>"

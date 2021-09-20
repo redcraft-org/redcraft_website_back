@@ -4,7 +4,7 @@ from django.db import models
 class LocalizedCategory(models.Model):
     name = models.CharField(max_length=32)
     language = models.ForeignKey(
-        'ArticleLanguage',
+        'Language',
         on_delete=models.CASCADE
     )
     category = models.ForeignKey(
@@ -19,4 +19,4 @@ class LocalizedCategory(models.Model):
         ]
 
     def __str__(self):
-        return f"<LocalizedCategory: {self.language.short_code} - {self.category.code}>"
+        return f"<LocalizedCategory: {self.language.code} - {self.category.code}>"
