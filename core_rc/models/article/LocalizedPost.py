@@ -7,7 +7,7 @@ class LocalizedPost(models.Model):
         on_delete=models.CASCADE
     )
     language = models.ForeignKey(
-        'Language',
+        'ArticleLanguage',
         on_delete=models.CASCADE
     )
 

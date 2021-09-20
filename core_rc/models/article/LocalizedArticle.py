@@ -3,7 +3,7 @@ from django.db import models
 
 class LocalizedArticle(models.Model):
     language = models.ForeignKey(
-        'Language',
+        'ArticleLanguage',
         on_delete=models.CASCADE
     )
     article = models.ForeignKey(

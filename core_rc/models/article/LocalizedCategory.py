@@ -4,7 +4,7 @@ from django.db import models
 class LocalizedCategory(models.Model):
     name = models.CharField(max_length=32)
     language = models.ForeignKey(
-        'Language',
+        'ArticleLanguage',
         on_delete=models.CASCADE
     )
     category = models.ForeignKey(
