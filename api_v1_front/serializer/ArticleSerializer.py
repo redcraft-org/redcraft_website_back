@@ -11,13 +11,13 @@ class ArticleSerializer(serializers.Serializer):
     translation_source = serializers.CharField()
     author = serializers.CharField()
     category = serializers.CharField(source='article.category.code')
-    language = serializers.CharField(source='language.short_code')
+    language = serializers.CharField(source='language.code')
     published_at = serializers.DateTimeField(source='article.published_at')
     links = serializers.SerializerMethodField()
 
     def get_links(self, obj):
         return {
-            'article': self.context['request'].build_absolute_uri(reverse("article-detail", args=[obj.language.short_code, obj.slug]))
+            'article': self.context['request'].build_absolute_uri(reverse("article-detail", args=[obj.language.code, obj.slug]))
         }
 
     def get_id(self, obj):

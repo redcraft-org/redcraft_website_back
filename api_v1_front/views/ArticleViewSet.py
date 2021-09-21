@@ -19,7 +19,7 @@ from api_v1_front.serializer.ArticleSerializer import ArticleSerializer, Article
 class ArticleViewSet(viewsets.ViewSet):
     def __get_querryset_list(self, language, category):
         try:
-            language = Language.objects.get(short_code=language.upper())
+            language = Language.objects.get(code=language.upper())
             if category != 'all':
                 category = Category.objects.get(code=category)
         except Language.DoesNotExist:
@@ -45,7 +45,7 @@ class ArticleViewSet(viewsets.ViewSet):
 
     def retrieve(self, request, language, pk):
         try:
-            language = Language.objects.get(short_code=language.upper())
+            language = Language.objects.get(code=language.upper())
         except Language.DoesNotExist:
             return Response(status=404)
 

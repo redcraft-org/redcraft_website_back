@@ -10,7 +10,7 @@ class PlayerLanguage(models.Model):
 
     language = models.ForeignKey(
         'Language',
-        related_name='languages',
+        related_name='player_language',
         on_delete=models.CASCADE
     )
 

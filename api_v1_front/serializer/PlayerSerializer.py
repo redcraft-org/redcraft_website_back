@@ -12,18 +12,26 @@ class PlayerSerializer(serializers.Serializer):
 
 
     class PlayerLanguageListSerializer(serializers.Serializer):
-        code = serializers.CharField(source='language')
-        name = serializers.CharField()
+        code = serializers.CharField(source='language.code')
+        name = serializers.CharField(source='language.name')
 
 
     id = serializers.SerializerMethodField()
-    main_language = serializers.CharField()
+    main_language = serializers.SerializerMethodField()
     languages = PlayerLanguageListSerializer(many=True)
     info = PlayerInfoProviderSerializer(many=True)
     links = serializers.SerializerMethodField()
 
     def get_id(self, obj):
         return f'player:{obj.id}'
+
+    def get_main_language(self, obj):
+        l = ''
+        for player_language in obj.languages.all():
+            if player_language.main_language:
+                l = player_language.language.code
+                break
+        return l
 
     def get_links(self, obj):
         return {

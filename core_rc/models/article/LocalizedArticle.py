@@ -4,7 +4,8 @@ from django.db import models
 class LocalizedArticle(models.Model):
     language = models.ForeignKey(
         'Language',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='articles'
     )
     article = models.ForeignKey(
         'Article',
