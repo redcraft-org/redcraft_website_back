@@ -3,20 +3,44 @@
 from django.db import migrations
 
 
-def init_data(apps, schema_editor):
-    # Get models
-    Language = apps.get_model('core_rc', 'Language')
-    Category = apps.get_model('core_rc', 'Category')
-    LocalizedCategory = apps.get_model('core_rc', 'LocalizedCategory')
+def create_languages(Language):
+    language_data = (
+        ('BG', 'Bulgarian'),
+        ('CS', 'Czech'),
+        ('DA', 'Danish'),
+        ('DE', 'German'),
+        ('EL', 'Greek'),
+        ('EN', 'English'),
+        ('ES', 'Spanish'),
+        ('ET', 'Estonian'),
+        ('FI', 'Finnish'),
+        ('FR', 'French'),
+        ('HU', 'Hungarian'),
+        ('IT', 'Italian'),
+        ('JA', 'Japanese'),
+        ('LT', 'Lithuanian'),
+        ('LV', 'Latvian'),
+        ('NL', 'Dutch'),
+        ('PL', 'Polish'),
+        ('PT', 'Portuguese'),
+        ('RO', 'Romanian'),
+        ('RU', 'Russian'),
+        ('SK', 'Slovak'),
+        ('SL', 'Slovenian'),
+        ('SV', 'Swedish'),
+        ('ZH', 'Chinese'),
+    )
 
-    # Create language
-    language_fr = Language.objects.create(short_code='FR')
-    language_en = Language.objects.create(short_code='EN')
+    languages = {}
+    for language_code, language_name in language_data:
+        languages[language_code] = Language.objects.create(
+            code=language_code,
+            name=language_name
+        )
+        languages[language_code].save()
+    return languages
 
-    language_fr.save()
-    language_en.save()
-
-    # Create Category
+def create_category(Category):
     category_redstone = Category.objects.create(code='redstone')
     category_bluid = Category.objects.create(code='build')
     category_news = Category.objects.create(code='news')
@@ -25,16 +49,32 @@ def init_data(apps, schema_editor):
     category_bluid.save()
     category_news.save()
 
-    # create LocalizedCategory
+    return {
+        'redstone':category_redstone,
+        'build':category_bluid,
+        'news':category_news,
+    }
+
+def create_localized_categorys(LocalizedCategory, languages, categorys):
     def save_obj(category, language, name):
         LocalizedCategory.objects.create(name=name, language=language, category=category).save()
 
-    save_obj(category_redstone, language_fr, 'Redstone')
-    save_obj(category_redstone, language_en, 'Redstone')
-    save_obj(category_bluid, language_fr, 'Construction')
-    save_obj(category_bluid, language_en, 'Build')
-    save_obj(category_news, language_fr, 'Nouvelles')
-    save_obj(category_news, language_en, 'News')
+    save_obj(categorys['redstone'], languages['FR'], 'Redstone')
+    save_obj(categorys['redstone'], languages['EN'], 'Redstone')
+    save_obj(categorys['build'], languages['FR'], 'Construction')
+    save_obj(categorys['build'], languages['EN'], 'Build')
+    save_obj(categorys['news'], languages['FR'], 'Nouvelles')
+    save_obj(categorys['news'], languages['EN'], 'News')
+
+def init_data(apps, schema_editor):
+    # Get models
+    Language = apps.get_model('core_rc', 'Language')
+    Category = apps.get_model('core_rc', 'Category')
+    LocalizedCategory = apps.get_model('core_rc', 'LocalizedCategory')
+
+    languages = create_languages(Language)
+    categorys = create_category(Category)
+    create_localized_categorys(LocalizedCategory, languages, categorys)
 
 class Migration(migrations.Migration):
 

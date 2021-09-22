@@ -19,4 +19,4 @@ class LocalizedCategory(models.Model):
         ]
 
     def __str__(self):
-        return f"<LocalizedCategory: {self.language.short_code} - {self.category.code}>"
+        return f"<LocalizedCategory: {self.language.code} - {self.category.code}>"

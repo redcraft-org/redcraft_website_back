@@ -18,8 +18,8 @@ class DonationViewSet(viewsets.ViewSet):
         try:
             donation = Donation.objects\
                 .select_related('player', 'gifter')\
-                .prefetch_related('player__languages', 'player__info')\
-                .prefetch_related('gifter__languages', 'gifter__info')\
+                .prefetch_related('player__languages', 'player__info', 'player__languages__language')\
+                .prefetch_related('gifter__languages', 'gifter__info', 'gifter__languages__language')\
                 .get(id=pk)
         except:
             return Response(status=404)
@@ -39,8 +39,8 @@ class DonationViewSet(viewsets.ViewSet):
 
         donation = Donation.objects\
             .select_related('player', 'gifter', 'discount')\
-            .prefetch_related('player__languages', 'player__info')\
-            .prefetch_related('gifter__languages', 'gifter__info')\
+            .prefetch_related('player__languages', 'player__info', 'player__languages__language')\
+            .prefetch_related('gifter__languages', 'gifter__info', 'gifter__languages__language')\
             .all()
 
         serializer = DonationSerializer(

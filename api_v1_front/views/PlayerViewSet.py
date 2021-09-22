@@ -34,10 +34,15 @@ class PlayerViewSet(viewsets.ViewSet):
         if page < 1:
             return Response(status=404)
 
-        donation = Player.objects.prefetch_related('languages', 'info').all()
+        start = (page - 1) * per_page
+        stop = start + per_page
+
+        donation = Player.objects\
+            .prefetch_related('languages', 'info', 'languages', 'languages__language')\
+            .all()
 
         serializer = PlayerSerializer(
-            donation,
+            donation[start:stop],
             context={'request': request},
             many=True
         )

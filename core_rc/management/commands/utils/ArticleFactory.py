@@ -42,7 +42,7 @@ class ArticleFactory:
                     'model': 'core_rc.LocalizedArticle',
                     'pk': pk_localized_article,
                     'fields': {
-                        'language': language.short_code,
+                        'language': language,
                         'article': data_article['pk'],
                         'title': title,
                         'overview': lorem.words(10),

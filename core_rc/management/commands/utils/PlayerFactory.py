@@ -28,7 +28,6 @@ class PlayerFactory():
             'pk': str(uuid.uuid4()),
             'fields': {
                 'email': f'{lorem.words(1)}@{lorem.words(1)}.com' if random.random() < self.player_email_ratio else None,
-                'main_language': ['FR', 'EN'][random.randint(0, 1)],
                 'created_at': Utils.create_date(),
             }
         } for i in range(count)]
@@ -39,7 +38,8 @@ class PlayerFactory():
             'pk': i + 1,
             'fields': {
                 'player_id': data['pk'],
-                'language': data['fields']['main_language'],
+                'language': random.choice(['FR', 'EN']),
+                'main_language': True
             }
         } for i, data in enumerate(data_player)]
 
@@ -49,10 +49,11 @@ class PlayerFactory():
             'model': 'core_rc.PlayerLanguage',
             'pk': i + count + 1,
             'fields': {
-                'player_id': data['pk'],
-                'language': {'FR': 'EN', 'EN': 'FR'}[data['fields']['main_language']],
+                'player_id': data['fields']['player_id'],
+                'language': {'FR': 'EN', 'EN': 'FR'}[data['fields']['language']],
+                'main_language': False
             }
-        } for i, data in enumerate(data_player) if random.random() < 0.5]
+        } for i, data in enumerate(data) if random.random() < 0.5]
 
         return data
 

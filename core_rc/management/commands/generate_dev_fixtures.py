@@ -53,7 +53,7 @@ class Command(BaseCommand):
         if settings.ENVIRONMENT == 'production':
             self.stdout.write('!!! THIS COMMAND IS ONLY FOR DEVLOPMENT OR TESTING !!!')
 
-        language_list = models.Language.objects.all()
+        # language_list = models.Language.objects.filter()all()
         category_list = models.Category.objects.all()
 
         count_article = options['count_article'][0]
@@ -62,7 +62,7 @@ class Command(BaseCommand):
         count_discount = options['count_discount'][0]
 
         # Generate data
-        data_article = ArticleFactory().generate(count_article, language_list, category_list)
+        data_article = ArticleFactory().generate(count_article, ['FR', 'EN'], category_list)
         data_player = PlayerFactory().generate(count_player)
         data_donation = DonationFactory().generate(count_donation, count_discount, data_player['data_player'])
 
