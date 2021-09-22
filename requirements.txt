@@ -1,4 +1,4 @@
-django==3.2.4
+django==3.2.7
 gunicorn==20.0.4
 sentry-sdk==0.19.3
 python-dotenv==0.15.0
@@ -6,7 +6,7 @@ django-sass==1.0.0
 user-agents==2.2.0
 mysqlclient==2.0.1
 requests==2.25.0
-pillow==8.2.0
+pillow==8.3.2
 numpy==1.19.4
 watchdog==0.10.3
 discord-webhook==0.11.0
