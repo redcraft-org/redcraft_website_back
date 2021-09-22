@@ -26,12 +26,9 @@ class PlayerSerializer(serializers.Serializer):
         return f'player:{obj.id}'
 
     def get_main_language(self, obj):
-        l = ''
         for player_language in obj.languages.all():
             if player_language.main_language:
-                l = player_language.language.code
-                break
-        return l
+                return player_language.language.code
 
     def get_links(self, obj):
         return {
