@@ -10,7 +10,7 @@ from core_rc.models import (
     Donation,
 )
 
-from api_v1_front.serializer.DonationSerializer import DonationSerializer
+from api_v1_public.serializer.DonationSerializer import DonationSerializer
 
 
 class DonationViewSet(viewsets.ViewSet):

@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'core_rc.apps.CoreRcConfig',
-    'api_v1_front.apps.ApiV1FrontConfig',
+    'api_v1_public.apps.ApiV1FrontConfig',
     'url_shortener_v1.apps.UrlShortenerV1Config'
 ]
 

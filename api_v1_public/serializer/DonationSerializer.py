@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import serializers
 
 from core_rc import models
-from api_v1_front.serializer.PlayerSerializer import PlayerSerializer
+from api_v1_public.serializer.PlayerSerializer import PlayerSerializer
 
 
 class DonationSerializer(serializers.Serializer):

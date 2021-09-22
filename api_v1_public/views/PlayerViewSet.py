@@ -11,7 +11,7 @@ from core_rc.models import (
     Player,
 )
 
-from api_v1_front.serializer.PlayerSerializer import PlayerSerializer
+from api_v1_public.serializer.PlayerSerializer import PlayerSerializer
 
 
 class PlayerViewSet(viewsets.ViewSet):
