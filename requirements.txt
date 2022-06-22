@@ -7,7 +7,7 @@ user-agents==2.2.0
 mysqlclient==2.0.1
 requests==2.25.0
 pillow==8.0.1
-numpy==1.19.4
+numpy==1.22.0
 watchdog==0.10.3
 discord-webhook==0.11.0
 boto3==1.16.30
