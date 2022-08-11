@@ -1,4 +1,4 @@
-django==3.2
+django==3.2.15
 gunicorn==20.0.4
 sentry-sdk==0.19.3
 python-dotenv==0.15.0
